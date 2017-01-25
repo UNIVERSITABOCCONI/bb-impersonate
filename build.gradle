@@ -8,8 +8,7 @@ group "edu.sdsu.its.impersonate"
 version "1.0"
 
 ext {
-//    learnVersion = "3000.1.0-rel.52"
-    learnVersion = "9.1.201510.1171621"
+    learnVersion = "3000.1.0-rel.52"
     deployServer = "https://sdsutest.blackboard.com"
     deployInstance = "BBLEARN"
 }
