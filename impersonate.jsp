@@ -9,7 +9,7 @@
 	blackboard.platform.context.Context,
 	blackboard.platform.*,
 	blackboard.platform.security.authentication.*,
-	edu.usf.imp.*" 
+	edu.sdsu.its.impersonate.*"
 	%>
 
 <%@ taglib uri="/bbData" prefix="bbData"%>

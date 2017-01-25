@@ -24,6 +24,7 @@ public class Impersonate {
     BbPersistenceManager bbPm;
     Id userId;
     User user;
+    User impersonatedUser;
     HttpServletRequest impRequest;
     HttpServletResponse impResponse;
     String username;
@@ -37,10 +38,8 @@ public class Impersonate {
 
 
         UserDbLoader userLoader = UserDbLoader.Default.getInstance();
-        user = userLoader.loadByUserName(targetId);
-        userId = user.getId();
-
-
+        impersonatedUser = userLoader.loadByUserName(targetId);
+        userId = impersonatedUser.getId();
     }
 
 
@@ -66,7 +65,7 @@ public class Impersonate {
             // Permitted
 
             //noinspection RedundantIfStatement
-            if (ctx.getUser().getSystemRole().compareTo(user.getSystemRole()) >= 0)
+            if (ctx.getUser().getSystemRole().compareTo(impersonatedUser.getSystemRole()) >= 0)
                 // Trying to impersonate a user less or equal system authority
                 return true;
 
