@@ -1,5 +1,8 @@
 <%@ page import="blackboard.platform.security.Entitlement,
                  edu.sdsu.its.impersonate.Impersonate" %>
+<%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="blackboard.data.user.User" %>
+<%@ page import="blackboard.platform.security.SecurityUtil" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 
 
@@ -14,9 +17,15 @@
     </bbNG:breadcrumbBar>
 
     <%
-        Impersonate imp = new Impersonate(ctx.getUser().getUserName(), request, response);
-        if (ctx.getUser().getSystemRole().getEntitlements().has(new Entitlement("sdsu.impersonate.admin.EXECUTE"))) {
-            response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1");
+        final Logger logger = Logger.getLogger(this.getClass());
+        final User user = ctx.getUser();
+
+//        Impersonate imp = new Impersonate(user.getUserName(), request, response);
+        logger.debug(String.format("\"%s\" is requesting to Impersonate a user...", user.getUserName()));
+
+        if (!SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.EXECUTE"))) {
+            logger.warn("Insufficient Permissions to Impersonate for User: " + user.getUserName());
+            response.sendError(403, "You do not have sufficient privileges to complete the requested action.");
             return;
         }
 

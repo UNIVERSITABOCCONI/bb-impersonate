@@ -38,7 +38,7 @@
 	try{
 		imp = new Impersonate(netid,request,response);
 
-		if(!imp.checkAuth(ctx)){
+		if(!imp.checkRelation(ctx)){
 			response.sendRedirect(request.getScheme()+"://"+request.getServerName()+"/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1");
 			return;
 		}

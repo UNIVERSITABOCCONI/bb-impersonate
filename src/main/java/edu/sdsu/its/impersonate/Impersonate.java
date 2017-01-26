@@ -2,7 +2,6 @@ package edu.sdsu.its.impersonate;
 
 
 import blackboard.data.user.User;
-import blackboard.data.user.User.SystemRole;
 import blackboard.persist.BbPersistenceManager;
 import blackboard.persist.Id;
 import blackboard.persist.KeyNotFoundException;
@@ -11,16 +10,18 @@ import blackboard.persist.user.UserDbLoader;
 import blackboard.platform.context.Context;
 import blackboard.platform.context.ContextManager;
 import blackboard.platform.context.ContextManagerFactory;
-import blackboard.platform.security.Entitlement;
 import blackboard.platform.security.authentication.BbAuthenticationFailedException;
 import blackboard.platform.security.authentication.BbSecurityException;
 import blackboard.platform.security.authentication.SessionStub;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
 public class Impersonate {
+    private static final Logger LOGGER = Logger.getLogger(Impersonate.class);
+
     BbPersistenceManager bbPm;
     Id userId;
     User user;
@@ -60,18 +61,15 @@ public class Impersonate {
 
     }
 
-    public boolean checkAuth(Context ctx) {
-        if (ctx.getUser().getSystemRole().getEntitlements().has(new Entitlement("sdsu.impersonate.admin.EXECUTE"))) {
-            // Permitted
-
-            //noinspection RedundantIfStatement
-            if (ctx.getUser().getSystemRole().compareTo(impersonatedUser.getSystemRole()) >= 0)
-                // Trying to impersonate a user less or equal system authority
-                return true;
-
-            return false;
+    public boolean checkRelation(Context ctx) {
+        //noinspection RedundantIfStatement
+        if (ctx.getUser().getSystemRole().compareTo(impersonatedUser.getSystemRole()) <= 0) {
+            // Trying to impersonate a user less or equal system authority
+            LOGGER.debug("Impersonate User Level Check Passed");
+            return true;
         }
-        return false;
 
+        LOGGER.debug("Impersonate User Level Check FAILED");
+        return false;
     }
 }
