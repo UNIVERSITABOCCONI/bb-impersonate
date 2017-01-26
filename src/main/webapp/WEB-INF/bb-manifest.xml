@@ -34,7 +34,7 @@
 
         <entitlements>
             <entitlement uid="sdsu.impersonate.admin.EXECUTE"
-                         label="impersonate"
+                         label="Administrator Panel (Tools and Utilities) > Impersonate User"
                          type="System"
                          template="system.administration.VIEW" />
         </entitlements>
@@ -47,6 +47,7 @@
             <permission type="java.net.NetPermission" name="getCookieHandler" actions="read"/>
             <permission type="java.net.NetPermission" name="setCookieHandler" actions="write"/>
             <permission type="java.util.PropertyPermission" name="http.strictPostRedirect" actions="read,write"/>
+            <permission type="java.io.FilePermission" name="BB_HOME/logs/impersonate.log" actions="read,write"/>
         </permissions>
     </plugin>
 </manifest>

@@ -26,6 +26,8 @@ configurations {
 
 // define the project's dependencies
 dependencies {
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
     providedCompile "javax.servlet:servlet-api:2.5",
             "javax.servlet.jsp:jsp-api:2.1"
 
