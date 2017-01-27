@@ -35,8 +35,8 @@
                         SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.greater.EXECUTE") &&
                                 imp.checkRelation(ctx)
                 )) {
-                    imp.doImpersonate();
                     logger.info("User " + ctx.getUser().getUserName() + " is now impersonating user " + netid + ". Bon voyage!");
+                    imp.doImpersonate();
                 }
 
                 response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1");
