@@ -19,7 +19,6 @@
         final Logger logger = Logger.getLogger(this.getClass());
         final User user = ctx.getUser();
 
-//        Impersonate imp = new Impersonate(user.getUserName(), request, response);
         logger.debug(String.format("\"%s\" is requesting to Impersonate a user...", user.getUserName()));
 
         if (!SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.le.EXECUTE")) &&

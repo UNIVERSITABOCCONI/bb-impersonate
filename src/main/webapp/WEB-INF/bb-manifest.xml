@@ -19,7 +19,7 @@
 
         <application-defs>
             <application handle="impersonate" type="system" name="Impersonate">
-                <description lang="en_US">Allows an user to impersonate a user.</description>
+                <description lang="en_US">Allows an admin to impersonate a user.</description>
                 <links>
                     <link>
                         <type value="system_tool"/>
