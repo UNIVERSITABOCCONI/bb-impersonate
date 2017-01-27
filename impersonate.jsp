@@ -1,10 +1,8 @@
 <%@ page import="blackboard.persist.PersistenceException,
+                 blackboard.platform.security.SecurityUtil,
                  blackboard.platform.security.authentication.BbAuthenticationFailedException,
                  edu.sdsu.its.impersonate.Impersonate,
-                 org.apache.log4j.Logger"
-%>
-<%@ page import="blackboard.platform.security.SecurityUtil" %>
-
+                 org.apache.log4j.Logger" %>
 <%@ taglib uri="/bbData" prefix="bbData" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 <%

@@ -1,8 +1,7 @@
-<%@ page import="blackboard.platform.security.Entitlement,
-                 edu.sdsu.its.impersonate.Impersonate" %>
-<%@ page import="org.apache.log4j.Logger" %>
-<%@ page import="blackboard.data.user.User" %>
-<%@ page import="blackboard.platform.security.SecurityUtil" %>
+<%@ page import="blackboard.data.user.User,
+                 blackboard.platform.security.Entitlement,
+                 blackboard.platform.security.SecurityUtil,
+                 org.apache.log4j.Logger" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 
 
