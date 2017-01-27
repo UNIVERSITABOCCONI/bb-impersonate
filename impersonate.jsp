@@ -31,26 +31,21 @@
                 imp = new Impersonate(netid, request, response);
                 logger.debug(String.format("\"%s\" is requesting to Impersonate \"%s\"", ctx.getUser().getUserName(), netid));
 
-                if (!SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.EXECUTE") || !imp.checkRelation(ctx)) {
-                    logger.warn("Insufficient Permissions to Impersonate for User: " + ctx.getUser().getUserName());
-                    response.sendError(403, "You do not have sufficient privileges to complete the requested action.");
-                    return;
+                if (SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.all.EXECUTE") || (
+                        SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.greater.EXECUTE") &&
+                                imp.checkRelation(ctx)
+                )) {
+                    imp.doImpersonate();
+                    logger.info("User " + ctx.getUser().getUserName() + " is now impersonating user " + netid + ". Bon voyage!");
                 }
 
-                imp.doImpersonate();
-
-                logger.info("User " + ctx.getUser().getUserName() + " is now impersonating user " + netid + ". Bon voyage!");
-
                 response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1");
-
 
             } catch (BbAuthenticationFailedException e) {
                 logger.warn("Authentication Failure, insufficient permissions", e);
             } catch (PersistenceException pe) {
                 logger.warn("User not found.", pe);
             }
-
-
         %>
 
         <bbNG:okButton/>

@@ -22,7 +22,8 @@
 //        Impersonate imp = new Impersonate(user.getUserName(), request, response);
         logger.debug(String.format("\"%s\" is requesting to Impersonate a user...", user.getUserName()));
 
-        if (!SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.EXECUTE"))) {
+        if (!SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.le.EXECUTE")) &&
+                !SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.all.EXECUTE"))) {
             logger.warn("Insufficient Permissions to Impersonate for User: " + user.getUserName());
             response.sendError(403, "You do not have sufficient privileges to complete the requested action.");
             return;

@@ -26,17 +26,22 @@
                         <name value="Impersonate"/>
                         <url value="link.jsp"/>
                         <description value="Allows an admin to impersonate a user."/>
-                        <entitlement-uid value="sdsu.impersonate.admin.EXECUTE" />
+                        <entitlement-uid value="sdsu.impersonate.admin.le.EXECUTE"/>
+                        <entitlement-uid value="sdsu.impersonate.admin.all.EXECUTE"/>
                     </link>
                 </links>
             </application>
         </application-defs>
 
         <entitlements>
-            <entitlement uid="sdsu.impersonate.admin.EXECUTE"
-                         label="Administrator Panel (Tools and Utilities) > Impersonate User"
+            <entitlement uid="sdsu.impersonate.admin.le.EXECUTE"
+                         label="Administrator Panel (Tools and Utilities) > Impersonate User w/ Less than or Equal Role"
                          type="System"
-                         template="system.administration.VIEW" />
+                         template="system.administration.VIEW"/>
+            <entitlement uid="sdsu.impersonate.admin.all.EXECUTE"
+                         label="Administrator Panel (Tools and Utilities) > Impersonate Any User"
+                         type="System"
+                         template="system.administration.VIEW"/>
         </entitlements>
 
 
