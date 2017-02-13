@@ -10,7 +10,7 @@
         </requires>
         <vendor>
             <id value="sdsu"/>
-            <name value="San Diego State University - Instructional Technology Services"/>
+            <name value="San Diego State University"/>
             <url value="http://www.its.sdsu.edu/"/>
         </vendor>
         <http-actions>

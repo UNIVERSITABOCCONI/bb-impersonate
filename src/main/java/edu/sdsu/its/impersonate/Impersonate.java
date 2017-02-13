@@ -63,13 +63,13 @@ public class Impersonate {
 
     public boolean checkRelation(Context ctx) {
         //noinspection RedundantIfStatement
-        if (ctx.getUser().getSystemRole().compareTo(impersonatedUser.getSystemRole()) <= 0) {
+        if (ctx.getUser().getSystemRole().compareTo(impersonatedUser.getSystemRole()) >= 0) {
             // Trying to impersonate a user less or equal system authority
             LOGGER.debug("Impersonate User Level Check Passed");
             return true;
         }
 
-        LOGGER.debug("Impersonate User Level Check FAILED");
+        LOGGER.info("Impersonate User Level Check FAILED");
         return false;
     }
 }
