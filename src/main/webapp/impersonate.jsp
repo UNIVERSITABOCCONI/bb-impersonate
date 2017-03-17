@@ -5,10 +5,6 @@
                  org.apache.log4j.Logger" %>
 <%@ taglib uri="/bbData" prefix="bbData" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
-<%
-
-
-%>
 
 <bbData:context id="ctx">
 	<bbNG:breadcrumbBar navItem="admin_plugin_manage">
