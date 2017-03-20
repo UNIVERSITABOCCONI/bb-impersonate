@@ -10,7 +10,7 @@ request to impersonate a user, and which users they are allowed to impersonate.
 
 The latest Release can be downloaded from the [Releases Tab](https://github.com/sdsu-its/bb-impersonate/releases),
 which includes the  changes and improvements made to the version. It is
-installed just link a standard B2.
+installed just like a standard B2.
 
 ## Entitlements
 There are 2 entitlements that are included with the Building Block, each allows
