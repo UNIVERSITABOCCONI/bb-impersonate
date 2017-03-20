@@ -53,6 +53,7 @@ public class Impersonate {
         try {
             sessionStub = new SessionStub(impRequest);
             sessionStub.associateSessionWithUser(username);
+            LOGGER.info("Impersonate Successful!");
         } catch (BbSecurityException e) {
             e.printStackTrace();
         }
@@ -68,11 +69,17 @@ public class Impersonate {
 
         final Iterator<Entitlement> contextUserRoleIter = contextUser.getSystemRole().getEntitlements().iterator();
         int contextUserRoleEntitlementCount = 0;
-        while (contextUserRoleIter.hasNext()) contextUserRoleEntitlementCount++;
+        while (contextUserRoleIter.hasNext()) {
+            contextUserRoleIter.next();
+            contextUserRoleEntitlementCount++;
+        }
 
-        final Iterator<Entitlement> imperUserRoleIter = contextUser.getSystemRole().getEntitlements().iterator();
+        final Iterator<Entitlement> imperUserRoleIter = impersonatedUser.getSystemRole().getEntitlements().iterator();
         int imperUserRoleEntitlementCount = 0;
-        while (imperUserRoleIter.hasNext()) imperUserRoleEntitlementCount++;
+        while (imperUserRoleIter.hasNext()) {
+            imperUserRoleIter.next();
+            imperUserRoleEntitlementCount++;
+        }
 
         LOGGER.debug(String.format("Executing User Role has %d entitlements", contextUserRoleEntitlementCount));
         LOGGER.debug(String.format("Requested Role has  %d entitlements", imperUserRoleEntitlementCount));

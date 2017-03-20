@@ -19,28 +19,29 @@
 		</bbNG:pageHeader>
 
 		<%
-			final Logger logger = Logger.getLogger(this.getClass());
+			final Logger LOGGER = Logger.getLogger(this.getClass());
 			String netid = request.getParameter("netid");
 			Impersonate imp = null;
 
 			try {
 				imp = new Impersonate(netid, request, response);
-				logger.debug(String.format("\"%s\" is requesting to Impersonate \"%s\"", ctx.getUser().getUserName(), netid));
+				LOGGER.debug(String.format("\"%s\" is requesting to Impersonate \"%s\"", ctx.getUser().getUserName(), netid));
 
-				if (SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.all.EXECUTE") || (
-						SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.greater.EXECUTE") &&
-								imp.checkRelation(ctx)
-				)) {
-					logger.info("User " + ctx.getUser().getUserName() + " is now impersonating user " + netid + ". Bon voyage!");
+				if (SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.all.EXECUTE")) {
+				    LOGGER.debug("Requesting User has permissions to impersonate ALL Users");
+					imp.doImpersonate();
+				} else if (SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.le.EXECUTE") &&
+								imp.checkRelation(ctx)) {
+					LOGGER.debug("Requesting User has permissions to impersonate LESS/EQUAL Users");
 					imp.doImpersonate();
 				}
 
 				response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1");
 
 			} catch (BbAuthenticationFailedException e) {
-				logger.warn("Authentication Failure, insufficient permissions", e);
+				LOGGER.warn("Authentication Failure, insufficient permissions", e);
 			} catch (PersistenceException pe) {
-				logger.warn("User not found.", pe);
+				LOGGER.warn("User not found.", pe);
 			}
 		%>
 
