@@ -47,7 +47,6 @@ public class Impersonate {
 
 
     public void doImpersonate() throws BbAuthenticationFailedException {
-
         SessionStub sessionStub;
 
         try {
@@ -55,7 +54,7 @@ public class Impersonate {
             sessionStub.associateSessionWithUser(username);
             LOGGER.info("Impersonate Successful!");
         } catch (BbSecurityException e) {
-            e.printStackTrace();
+            LOGGER.error("Impersonate Failed!", e);
         }
 
         contextManager.purgeContext();
