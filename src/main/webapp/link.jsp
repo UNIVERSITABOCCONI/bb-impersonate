@@ -1,7 +1,6 @@
 <%@ page import="blackboard.data.user.User,
                  blackboard.platform.security.Entitlement,
-                 blackboard.platform.security.SecurityUtil,
-                 org.apache.log4j.Logger" %>
+                 blackboard.platform.security.SecurityUtil" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 
 
@@ -16,14 +15,10 @@
     </bbNG:breadcrumbBar>
 
     <%
-        final Logger logger = Logger.getLogger(this.getClass());
         final User user = ctx.getUser();
 
-        logger.debug(String.format("\"%s\" is requesting to Impersonate a user...", user.getUserName()));
-
-        if (!SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.le.EXECUTE")) &&
-                !SecurityUtil.userHasEntitlement(new Entitlement("sdsu.impersonate.admin.all.EXECUTE"))) {
-            logger.warn("Insufficient Permissions to Impersonate for User: " + user.getUserName());
+        if (!SecurityUtil.userHasEntitlement(new Entitlement("boc.impersonate.admin.le.EXECUTE")) &&
+                !SecurityUtil.userHasEntitlement(new Entitlement("boc.impersonate.admin.all.EXECUTE"))) {
             response.sendError(403, "You do not have sufficient privileges to complete the requested action.");
             return;
         }

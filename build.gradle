@@ -1,16 +1,16 @@
-apply plugin: "java"
-apply plugin: "war"
-apply plugin: "maven"
-apply plugin: "idea"
+plugins {
+  id "org.sonarqube" version "2.4"
+  id "java"
+  id "war"
+  id "maven"
+}
 
 // define the version for the project when publishing to maven
-group "edu.sdsu.its.impersonate"
-version "1.0"
+group "boc.impersonate"
+version "1.4"
 
 ext {
     learnVersion = "3000.1.0-rel.52"
-    deployServer = "https://sdsutest.blackboard.com"
-    deployInstance = "BBLEARN"
 }
 
 repositories {
@@ -26,34 +26,38 @@ configurations {
 
 // define the project's dependencies
 dependencies {
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    // compile group: 'log4j', name: 'log4j', version: '1.2.17'
 
     providedCompile "javax.servlet:servlet-api:2.5",
-            "javax.servlet.jsp:jsp-api:2.1"
+                    "javax.servlet.jsp:jsp-api:2.1"
 
     // Dependencies are libraries needed to build, but should not be included in the B2 WAR.
     // You should NEVER include Learn JARs (other than webapis) in your B2.
-    providedCompile("blackboard.platform:bb-platform:$ext.learnVersion") { transitive = false }
-    providedCompile("blackboard.platform:bb-taglibs:$ext.learnVersion") { transitive = false }
+    providedCompile("blackboard.platform:bb-platform:$rootProject.learnVersion") { transitive = false }
+    providedCompile("blackboard.platform:bb-taglibs:$rootProject.learnVersion") { transitive = false }
 
     // Building a Spring B2?  Use our Spring APIs!
-//    compile "blackboard.platform:bb-spring-webapi:10.1"
+    // compile "blackboard.platform:bb-spring-webapi:10.1"
 
     // Include the Blackboard security APIs for protecting your B2.
-//    providedCompile "blackboard.plugin:security:1.0:api"
+    // providedCompile "blackboard.plugin:security:1.0:api"
 
     // Dependencies that are only necessary at runtime so should be included in the WAR
     // runtime "org.javassist:javassist:3.17.1-GA"
 
-    buildUtils "org.oscelot:b2deploy-task:0.1.0"
+    // buildUtils "org.oscelot:b2deploy-task:0.1.0"
 }
 
 // Add a task to deploy a B2 using starting block
-task deployB2(dependsOn: "war") << {
+/* task deployB2(dependsOn: "war") << {
     ant.taskdef(name: "b2deploy", classname: "org.oscelot.ant.B2DeployTask", classpath: project.configurations.buildUtils.asPath)
     ant.b2deploy(localfilepath: project.war.archivePath, host: project.ext.deployServer, courseorgavailable: 'true', clean: 'true', webappName: 'bb-starting-block-' + project.ext.deployInstance)
-}
+} */
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.6'
+// Task for generating Maven POM for Github dependencies analysis https://docs.gradle.org/current/userguide/maven_plugin.html#sec:maven_convention_methods
+task writeNewPom {
+    doLast {
+        pom {
+        }.writeTo("/pom.xml")
+    }
 }

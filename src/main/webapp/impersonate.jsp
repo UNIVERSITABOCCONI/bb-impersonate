@@ -1,8 +1,7 @@
 <%@ page import="blackboard.persist.PersistenceException,
                  blackboard.platform.security.SecurityUtil,
                  blackboard.platform.security.authentication.BbAuthenticationFailedException,
-                 edu.sdsu.its.impersonate.Impersonate,
-                 org.apache.log4j.Logger" %>
+                 boc.impersonate.Impersonate" %>
 <%@ taglib uri="/bbData" prefix="bbData" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 
@@ -19,7 +18,6 @@
         </bbNG:pageHeader>
 
         <%
-            final Logger LOGGER = Logger.getLogger(this.getClass());
             String netid = request.getParameter("netid");
             Impersonate imp = null;
 
@@ -27,27 +25,19 @@
                 imp = new Impersonate(netid, request, response);
                 final String requesterUsername = ctx.getUser().getUserName();
 
-                LOGGER.debug(String.format("\"%s\" is requesting to Impersonate \"%s\"", requesterUsername, netid));
-
-                if (SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.all.EXECUTE")) {
-                    LOGGER.debug("Requesting User has permissions to impersonate ALL Users");
+                if (SecurityUtil.userHasEntitlement("boc.impersonate.admin.all.EXECUTE")) {
 
                     imp.doImpersonate();
-                    LOGGER.warn(String.format("\"%s\" is now impersonating \"%s\"!", requesterUsername, netid));
-                } else if (SecurityUtil.userHasEntitlement("sdsu.impersonate.admin.le.EXECUTE") &&
+                } else if (SecurityUtil.userHasEntitlement("boc.impersonate.admin.le.EXECUTE") &&
                         imp.checkRelation(ctx)) {
-                    LOGGER.debug("Requesting User has permissions to impersonate LESS/EQUAL Users");
 
                     imp.doImpersonate();
-                    LOGGER.warn(String.format("\"%s\" is now impersonating \"%s\"!", requesterUsername, netid));
                 }
 
-                response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1");
+                response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/");
 
             } catch (BbAuthenticationFailedException e) {
-                LOGGER.error("Authentication Failure, insufficient permissions", e);
             } catch (PersistenceException pe) {
-                LOGGER.warn(String.format("User \"%s\" not found", netid));
             }
         %>
 
