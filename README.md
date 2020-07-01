@@ -8,7 +8,7 @@ the original Impersonate B2, which was developed by [SDSU]() and [USF](http://ww
 This version of the B2 uses entitlements (AKA Permissions) to determine who can
 request to impersonate a user, and which users they are allowed to impersonate.
 
-The latest Release can be downloaded from the [Releases Tab](https://github.com/sdsu-its/bb-impersonate/releases),
+The latest Release can be downloaded from the [Releases Tab](https://github.com/UNIVERSITABOCCONI/bb-impersonate/tree/master/war-building-blocks),
 which includes the  changes and improvements made to the version. It is
 installed just like a standard B2.
 
