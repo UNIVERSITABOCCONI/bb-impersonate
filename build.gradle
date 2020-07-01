@@ -20,7 +20,7 @@ String getB2Version() {
 }
 
 repositories {
-    mavenCentral()
+    maven { url "https://repo.maven.apache.org/maven2" }
     maven {
         url "https://maven.blackboard.com/content/repositories/releases/"
     }
@@ -29,6 +29,8 @@ repositories {
 configurations {
     buildUtils
 }
+
+
 
 // define the project's dependencies
 dependencies {
@@ -62,14 +64,18 @@ dependencies {
 
 
 // DEFAULT TASK MODIFICATIONS
-
+//Java 8 compatibility
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 // Task for generating Maven POM for Github dependencies analysis https://docs.gradle.org/current/userguide/maven_plugin.html#sec:maven_convention_methods
 // see also https://www.baeldung.com/gradle-build-to-maven-pom
 install {
     doLast{
         copy {
             from file("$buildDir/libs")
-            into file("/packaged-installers")
+            into file("/war-building-blocks")
         }
     }
     repositories {
