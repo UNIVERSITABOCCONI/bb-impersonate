@@ -7,3 +7,6 @@
 # JAVA
 # Compiled class file
 *.class
+
+#Eclipse
+/bin/

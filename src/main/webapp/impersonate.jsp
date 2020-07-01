@@ -37,7 +37,9 @@
                 response.sendRedirect(request.getScheme() + "://" + request.getServerName() + "/");
 
             } catch (BbAuthenticationFailedException e) {
+                out.println("You must have a System Administrator roll to do this.");
             } catch (PersistenceException pe) {
+                out.println("User not found.");
             }
         %>
 
