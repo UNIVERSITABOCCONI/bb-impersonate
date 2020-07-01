@@ -6,16 +6,16 @@
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 
 <bbData:context id="ctx">
-    <bbNG:breadcrumbBar navItem="admin_plugin_manage">
-        <bbNG:breadcrumb>Impersonate</bbNG:breadcrumb>
-    </bbNG:breadcrumbBar>
 
     <bbNG:genericPage ctxId="ctx" title="Impersonate">
-
 
         <bbNG:pageHeader>
             <bbNG:pageTitleBar title="Impersonate"/>
         </bbNG:pageHeader>
+
+        <bbNG:breadcrumbBar navItem="admin_plugin_manage">
+            <bbNG:breadcrumb>Impersonate</bbNG:breadcrumb>
+        </bbNG:breadcrumbBar>
 
         <%
             String netid = request.getParameter("netid");
