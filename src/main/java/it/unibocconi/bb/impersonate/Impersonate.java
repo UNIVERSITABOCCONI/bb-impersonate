@@ -1,5 +1,4 @@
-package boc.impersonate;
-
+package it.unibocconi.bb.impersonate;
 
 import blackboard.data.user.User;
 import blackboard.persist.BbPersistenceManager;

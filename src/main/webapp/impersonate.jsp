@@ -1,7 +1,7 @@
 <%@ page import="blackboard.persist.PersistenceException,
                  blackboard.platform.security.SecurityUtil,
                  blackboard.platform.security.authentication.BbAuthenticationFailedException,
-                 boc.impersonate.Impersonate" %>
+                 it.unibocconi.bb.impersonate.Impersonate" %>
 <%@ taglib uri="/bbData" prefix="bbData" %>
 <%@ taglib uri="/bbNG" prefix="bbNG" %>
 

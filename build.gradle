@@ -5,8 +5,8 @@ plugins {
   id "maven"
 }
 
-// define the version for the project when publishing to maven
-group "boc.impersonate"
+// define the gradle project properties
+group "it.unibocconi"
 version getB2Version()
 
 ext {
@@ -26,12 +26,6 @@ repositories {
     }
 }
 
-configurations {
-    buildUtils
-}
-
-
-
 // define the project's dependencies
 dependencies {
     // compile group: 'log4j', name: 'log4j', version: '1.2.17'
@@ -44,24 +38,11 @@ dependencies {
     providedCompile("blackboard.platform:bb-platform:$rootProject.learnVersion") { transitive = false }
     providedCompile("blackboard.platform:bb-taglibs:$rootProject.learnVersion") { transitive = false }
 
-    // Building a Spring B2?  Use our Spring APIs!
-    // compile "blackboard.platform:bb-spring-webapi:10.1"
-
-    // Include the Blackboard security APIs for protecting your B2.
-    // providedCompile "blackboard.plugin:security:1.0:api"
-
     // Dependencies that are only necessary at runtime so should be included in the WAR
     // runtime "org.javassist:javassist:3.17.1-GA"
 
     // buildUtils "org.oscelot:b2deploy-task:0.1.0"
 }
-
-// Add a task to deploy a B2 using starting block
-/* task deployB2(dependsOn: "war") << {
-    ant.taskdef(name: "b2deploy", classname: "org.oscelot.ant.B2DeployTask", classpath: project.configurations.buildUtils.asPath)
-    ant.b2deploy(localfilepath: project.war.archivePath, host: project.ext.deployServer, courseorgavailable: 'true', clean: 'true', webappName: 'bb-starting-block-' + project.ext.deployInstance)
-} */
-
 
 // DEFAULT TASK MODIFICATIONS
 //Java 8 compatibility
@@ -74,13 +55,16 @@ java {
 install {
     doLast{
         copy {
-            from file("$buildDir/libs")
-            into file("/war-building-blocks")
+            from file("$buildDir/libs/" + project.name + "-" + getB2Version() + ".war")
+            into file("war-building-blocks")
         }
     }
     repositories {
         mavenInstaller {
-            pom.writeTo("/pom.xml")
+            pom.groupId = project.group
+            pom.version = project.version
+            pom.artifactId = project.name
+            pom.writeTo("pom.xml")
         }
     }
 }
